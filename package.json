@@ -1,0 +1,23 @@
+{
+  "name": "session-typed-worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "worker",
+    "typescript",
+    "session-type"
+  ],
+  "repository": "github:ahuglajbclajep/session-typed-worker",
+  "author": "ahuglajbclajep (https://github.com/ahuglajbclajep)",
+  "license": "MIT",
+  "bugs": "https://github.com/ahuglajbclajep/session-typed-worker/issues",
+  "homepage": "https://github.com/ahuglajbclajep/session-typed-worker#readme",
+  "devDependencies": {
+    "typescript": "^3.2.2"
+  }
+}
