@@ -1,5 +1,5 @@
 import { C2W, W2C, Fin } from "session-typed-worker";
 
-type Number2String = C2W<number, W2C<string, Fin>>;
+type CheckNumbersEquality = C2W<number, C2W<number, W2C<boolean, Fin>>>;
 
-export { Number2String };
+export { CheckNumbersEquality };

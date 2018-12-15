@@ -42,61 +42,63 @@ declare module "worker-loader!*" {
 
 Write as a type a communication procedure and the kinds of values ​​to handle.
 Sending from the main script to the worker is `C2W`, and the reverse is `W2C`.
-The following `Number2String` protocol shows the operation of sending a number to the worker, receiving a string from the worker.
+The following `CheckNumbersEquality` protocol shows the operation of sending a numbers twice to the worker, receiving a boolean from the worker.
 
 ```ts
 // protocols.d.ts
 import { C2W, W2C, Fin } from "session-typed-worker";
 
-type Number2String = C2W<number, W2C<string, Fin>>;
+type CheckNumbersEquality = C2W<number, C2W<number, W2C<boolean, Fin>>>;
 
-export { Number2String };
+export { CheckNumbersEquality };
 ```
 
 ### Writing code
 
 The type representing communication on the main script side is taken out by giving `["client"]` to the protocol.
-Here the type of `p` is `Send<number, Recv<string, Close>>`.
-(If you are using VSCode, you can check this with a mouseover.)
-This type means that you first need to send a `numer` type value with `send` and then receive a `string` type value in `recv`.
-If you actually do `send`, the type of the return value changes to `Recv<string, Close>`.
-
-In TypeScript, shadowing of local variables is not allowed.
-Therefore, please note that it is necessary to change the variable name of the type value representing the communication operation like `p1` and `p2`.
 
 ```ts
 // index.ts
 import { send, recv } from "session-typed-worker";
-import * as protocols from "./protocols";
+import * as proto from "./protocols";
 import Worker = require("worker-loader!./worker");
 
-const p: protocols.Number2String["client"] = new Worker() as any;
+const p: proto.CheckNumbersEquality["client"] = new Worker() as any;
 
 (async () => {
   const p1 = send(p, 42);
-  const [v, p2] = await recv(p1);
-  console.log(v, typeof v); // 42 string
+  const p2 = send(p1, 42);
+  const [v, _] = await recv(p2);
+  console.log(v); // true
 })();
 ```
 
-Even if you write `recv` instead of `send` or write `boolean` instead of `number`, you can detect it by typing.
+Here the type of `p` is `Send<number, Send<number, Recv<boolean, Close>>>`.
+(If you are using VSCode, you can check this with a mouseover.)
+This type means that you first need to send a value of type `number` twice with `send` and then receive a value of type `boolean` with `recv`.
+If you actually do `send` once, the type of the return value (i.e. `p1`) changes to `Send<number, Recv<boolean, Close>>`.
+Even if you write `recv` instead of `send` or apply a value of type `string` instead of a value of type `number`, you can detect it by type checking.
+
+In TypeScript, shadowing of local variables is not allowed.
+Therefore, please note that it is necessary to change the variable name of the type value representing the communication operation like `p1` and `p2`.
 
 Just like the main script side, the type representing communication on the worker side is taken out by giving `["worker"]` to the protocol.
 
 ```ts
 // worker.ts
 import { send, recv } from "session-typed-worker";
-import * as protocols from "./protocols";
+import * as proto from "./protocols";
 
-const p: protocols.Number2String["worker"] = self as any;
+const p: proto.CheckNumbersEquality["worker"] = self as any;
 
 (async () => {
-  const [v, p1] = await recv(p);
-  send(p1, v.toString(10));
+  const [v1, p1] = await recv(p);
+  const [v2, p2] = await recv(p1);
+  send(p2, v1 === v2);
 })();
 ```
 
-At this time, the type of `p` is `Recv<number, Send<string, Close>>`, which is opposite to the type of `p` in the main script.
+At this time, the type of `p` is `Recv<number, Recv<number, Send<boolean, Close>>>`, which is opposite to the type of `p` in the main script.
 In other words, if you sending on one side, you can guarantee that the other side is sure to be receiving and you can write code that will not cause deadlock.
 
 Complete examples including _tsconfig.json_ and _webpack.config.js_ are in the [examples directory](examples/).
