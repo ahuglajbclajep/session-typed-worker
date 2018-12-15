@@ -99,7 +99,7 @@ const p: protocols.Number2String["worker"] = self as any;
 At this time, the type of `p` is `Recv<number, Send<string, Close>>`, which is opposite to the type of `p` in the main script.
 In other words, if you sending on one side, you can guarantee that the other side is sure to be receiving and you can write code that will not cause deadlock.
 
-Complete examples including _tsconfig.json_ and _webpack.config.js_ are in the [examples branch](https://github.com/ahuglajbclajep/session-typed-worker/tree/examples).
+Complete examples including _tsconfig.json_ and _webpack.config.js_ are in the [examples directory](examples/).
 
 # License
 
