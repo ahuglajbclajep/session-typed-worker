@@ -1,7 +1,7 @@
 {
   "name": "session-typed-worker",
   "version": "1.0.0",
-  "description": "",
+  "description": "A deadlock-free communication API for web workers based on (a subset of) session types.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -10,7 +10,7 @@
   "keywords": [
     "worker",
     "typescript",
-    "session-type"
+    "session-types"
   ],
   "repository": "github:ahuglajbclajep/session-typed-worker",
   "author": "ahuglajbclajep (https://github.com/ahuglajbclajep)",
