@@ -1,5 +1,7 @@
 # session-typed-worker
 
+[![npm version](https://badge.fury.io/js/session-typed-worker.svg)](https://badge.fury.io/js/session-typed-worker)
+
 > A deadlock-free communication API for web workers based on (a subset of) session types.
 
 ## Features
@@ -65,10 +67,10 @@ Therefore, please note that it is necessary to change the variable name of the t
 ```ts
 // index.ts
 import { send, recv } from "session-typed-worker";
-import * as protocol from "./protocols";
+import * as protocols from "./protocols";
 import Worker = require("worker-loader!./worker");
 
-const p: protocol.Number2String["client"] = new Worker() as any;
+const p: protocols.Number2String["client"] = new Worker() as any;
 
 (async () => {
   const p1 = send(p, 42);
@@ -84,9 +86,9 @@ Just like the main script side, the type representing communication on the worke
 ```ts
 // worker.ts
 import { send, recv } from "session-typed-worker";
-import * as protocol from "./protocols";
+import * as protocols from "./protocols";
 
-const p: protocol.Number2String["worker"] = self as any;
+const p: protocols.Number2String["worker"] = self as any;
 
 (async () => {
   const [v, p1] = await recv(p);
