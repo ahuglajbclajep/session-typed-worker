@@ -19,5 +19,8 @@
   "homepage": "https://github.com/ahuglajbclajep/session-typed-worker#readme",
   "devDependencies": {
     "typescript": "^3.2.2"
+  },
+  "peerDependencies": {
+    "worker-loader": "2.x"
   }
 }
