@@ -16,11 +16,11 @@ interface Close {
   kind: "close";
 }
 
-type Req<V, Cont extends { client: any; worker: any }> = {
+type C2W<V, Cont extends { client: any; worker: any }> = {
   client: Send<V, Cont["client"]>;
   worker: Recv<V, Cont["worker"]>;
 };
-type Rsp<V, Cont extends { client: any; worker: any }> = {
+type W2C<V, Cont extends { client: any; worker: any }> = {
   client: Recv<V, Cont["client"]>;
   worker: Send<V, Cont["worker"]>;
 };
@@ -37,4 +37,4 @@ function recv<V, S>(port: Recv<V, S>): Promise<[V, S]> {
   );
 }
 
-export { Req, Rsp, Fin, send, recv };
+export { C2W, W2C, Fin, send, recv };
