@@ -15,6 +15,7 @@
 ### Install
 
 Also install [worker-loader](https://github.com/webpack-contrib/worker-loader) for `importScripts()`.
+You can use [worker-plugin](https://www.npmjs.com/package/worker-plugin) instead of worker-loader like [this](examples/worker-plugin/).
 
 ```sh
 $ npm i -D worker-loader session-typed-worker
