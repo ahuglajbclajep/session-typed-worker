@@ -6,11 +6,7 @@
 
 ## Features
 
-- Type-safe & deadlock-free  
-  You can also get the type of the received value by inference.
-
-- Only two simple, synchronous APIs  
-  They do not even output objects for typing.
+- Type-safe & deadlock-free
 - Zero-dependency
 - Integration with webpack
 
@@ -103,6 +99,6 @@ In other words, if you sending on one side, you can guarantee that the other sid
 
 Complete examples including _tsconfig.json_ and _webpack.config.js_ are in the [examples directory](examples/).
 
-# License
+## License
 
 [MIT](LICENSE)
