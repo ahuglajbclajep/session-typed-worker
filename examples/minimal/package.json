@@ -1,13 +1,13 @@
 {
-  "name": "minimal",
+  "name": "minimal-example",
   "version": "1.0.0",
-  "description": "Minimal example of session-typed-worker",
+  "description": "A minimal example of session-typed-worker",
   "private": true,
   "scripts": {
     "build": "webpack"
   },
   "dependencies": {
-    "session-typed-worker": "^1.0.0"
+    "session-typed-worker": "^1.0.1"
   },
   "devDependencies": {
     "ts-loader": "^5.3.1",

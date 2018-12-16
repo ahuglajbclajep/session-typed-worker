@@ -1,6 +1,6 @@
-# minimal
+# minimal-example
 
-Minimal example of session-typed-worker.
+A minimal example of [session-typed-worker](https://www.npmjs.com/package/session-typed-worker).
 
 ## Build
 
