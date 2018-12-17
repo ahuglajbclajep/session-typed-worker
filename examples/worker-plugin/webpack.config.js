@@ -17,6 +17,6 @@ module.exports = {
     extensions: [".js", ".ts"]
   },
   output: {
-    globalObject: "self"
+    globalObject: "this"
   }
 };
