@@ -1,6 +1,6 @@
 {
   "name": "session-typed-worker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A deadlock-free communication API for web workers based on (a subset of) session types.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
