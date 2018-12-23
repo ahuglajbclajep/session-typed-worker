@@ -28,12 +28,12 @@ type Fin = { client: Close; worker: Close };
 
 function send<V, S>(port: Send<V, S>, value: V): S {
   port.postMessage(value);
-  return (port as any) as S;
+  return port as any;
 }
 
 function recv<V, S>(port: Recv<V, S>): Promise<[V, S]> {
   return new Promise(
-    resolve => (port.onmessage = e => resolve([e.data, (port as any) as S]))
+    resolve => (port.onmessage = e => resolve([e.data, port as any]))
   );
 }
 
