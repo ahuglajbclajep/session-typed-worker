@@ -1,11 +1,10 @@
 import { send, recv } from "session-typed-worker";
 import * as proto from "./protocols";
 
-declare class Worker {
-  constructor(stringUrl: string, option: { type: "module" });
-}
-const worker = new Worker("./worker", { type: "module" });
-const p: proto.CheckNumbersEquality["client"] = worker as any;
+const p: proto.CheckNumbersEquality["client"] = new (Worker as any)(
+  "./worker",
+  { type: "module" }
+);
 
 (async () => {
   const p1 = send(p, 42);

@@ -1,8 +1,8 @@
 import { send, recv } from "session-typed-worker";
 import * as proto from "./protocols";
-import Worker = require("worker-loader!./worker");
+import Worker from "worker-loader!./worker";
 
-const p: proto.CheckNumbersEquality["client"] = new Worker() as any;
+const p: proto.CheckNumbersEquality["client"] = new Worker();
 
 (async () => {
   const p1 = send(p, 42);
