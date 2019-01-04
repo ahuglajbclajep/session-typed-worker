@@ -1,4 +1,1 @@
-declare module "worker-loader!*" {
-  const worker: any;
-  export default worker;
-}
+declare module "worker-loader!*";

@@ -8,30 +8,36 @@
 
 - Type-safe & deadlock-free
 - Zero-dependency
-- Integration with webpack
+- Integration with webpack & parcel
 
 ## Getting Started
 
 ### Install
 
 Also install [worker-loader](https://github.com/webpack-contrib/worker-loader) for `importScripts()`.
-You can use [worker-plugin](https://www.npmjs.com/package/worker-plugin) instead of worker-loader like [this](examples/worker-plugin/).
+
+You can use [worker-plugin](https://www.npmjs.com/package/worker-plugin) or [parcel](https://parceljs.org) instead of worker-loader.
+In this case, the following `.d.ts` setting is unnecessary.
+Complete examples is [here](examples/).
 
 ```sh
 $ npm i -D worker-loader session-typed-worker
 ```
 
-Then, set worker-loader's [Integrating with TypeScript](https://github.com/webpack-contrib/worker-loader/blob/master/README.md#integrating-with-typescript).
-Probably it will be like this:
+Then, set worker-loader's integrating with TypeScript.
+
+```ts
+// typings/custom.d.ts
+declare module "worker-loader!*";
+```
+
+Note: If `"esModuleInterop": true` is not set, please write `.d.ts` as follows.
 
 ```ts
 // typings/custom.d.ts
 declare module "worker-loader!*" {
-  class WebpackWorker extends Worker {
-    constructor();
-  }
-
-  export = WebpackWorker;
+  const worker: any;
+  export default worker;
 }
 ```
 
@@ -58,9 +64,9 @@ The type representing communication on the main script side is taken out by givi
 // index.ts
 import { send, recv } from "session-typed-worker";
 import * as proto from "./protocols";
-import Worker = require("worker-loader!./worker");
+import Worker from "worker-loader!./worker";
 
-const p: proto.CheckNumbersEquality["client"] = new Worker() as any;
+const p: proto.CheckNumbersEquality["client"] = new Worker();
 
 (async () => {
   const p1 = send(p, 42);
