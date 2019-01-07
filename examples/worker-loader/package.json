@@ -1,7 +1,7 @@
 {
   "name": "minimal-example",
   "version": "1.0.0",
-  "description": "A minimal example of session-typed-worker",
+  "description": "A minimal example using worker-loader",
   "private": true,
   "scripts": {
     "build": "webpack"
