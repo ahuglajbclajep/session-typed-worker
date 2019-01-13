@@ -1,0 +1,29 @@
+{
+  "name": "mdpreview",
+  "version": "1.0.0",
+  "description": "Simple Markdown previewer",
+  "private": true,
+  "scripts": {
+    "start": "parcel src/index.html --open",
+    "build": "parcel build src/index.html"
+  },
+  "dependencies": {
+    "github-markdown-css": "^2.10.0",
+    "highlight.js": "^9.13.1",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "rehype-highlight": "^2.2.1",
+    "rehype-stringify": "^5.0.0",
+    "remark-parse": "^6.0.3",
+    "remark-rehype": "^4.0.0",
+    "session-typed-worker": "^1.0.3",
+    "unified": "^7.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
+    "parcel-bundler": "^1.11.0",
+    "sass": "^1.16.0",
+    "typescript": "^3.2.2"
+  }
+}
