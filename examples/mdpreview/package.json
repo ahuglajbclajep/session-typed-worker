@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "start": "parcel src/index.html --open",
-    "build": "parcel build src/index.html"
+    "build": "parcel build --public-url . src/index.html",
+    "deploy": "rm -rf dist && npm run build && gh-pages -d dist -e mdpreview"
   },
   "dependencies": {
     "github-markdown-css": "^2.10.0",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
+    "gh-pages": "^2.0.1",
     "parcel-bundler": "^1.11.0",
     "sass": "^1.16.0",
     "typescript": "^3.2.2"
