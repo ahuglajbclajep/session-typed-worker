@@ -27,6 +27,8 @@ class App extends React.Component<{}, { html: string }> {
         <textarea
           className="edit-area"
           onChange={this.handleChange.bind(this)}
+          autoFocus
+          placeholder="# mdpreview"
         />
         <div
           className="markdown-body"
