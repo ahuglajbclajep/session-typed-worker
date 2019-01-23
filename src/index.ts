@@ -1,16 +1,8 @@
-interface Port {
-  postMessage: MessagePort["postMessage"];
-  onmessage: MessagePort["onmessage"] | Worker["onmessage"];
-}
-interface Send<V, S> extends Port {
+interface Send<V, S> {
   kind: "send";
-  value: V;
-  cont: S;
 }
-interface Recv<V, S> extends Port {
+interface Recv<V, S> {
   kind: "recv";
-  value: V;
-  cont: S;
 }
 interface Close {
   kind: "close";
@@ -27,14 +19,18 @@ type W2C<V, Cont extends { client: any; worker: any }> = {
 type Fin = { client: Close; worker: Close };
 
 function send<V, S>(port: Send<V, S>, value: V): S {
-  port.postMessage(value);
+  ((port as any) as MessagePort).postMessage(value);
   return port as any;
 }
 
 function recv<V, S>(port: Recv<V, S>): Promise<[V, S]> {
   return new Promise(
-    resolve => (port.onmessage = e => resolve([e.data, port as any]))
+    resolve =>
+      (((port as any) as MessagePort).onmessage = e =>
+        resolve([e.data, port as any]))
   );
 }
 
-export { C2W, W2C, Fin, send, recv };
+function close(port: Close): void {}
+
+export { C2W, W2C, Fin, send, recv, close };

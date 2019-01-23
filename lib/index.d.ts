@@ -1,16 +1,8 @@
-interface Port {
-    postMessage: MessagePort["postMessage"];
-    onmessage: MessagePort["onmessage"] | Worker["onmessage"];
-}
-interface Send<V, S> extends Port {
+interface Send<V, S> {
     kind: "send";
-    value: V;
-    cont: S;
 }
-interface Recv<V, S> extends Port {
+interface Recv<V, S> {
     kind: "recv";
-    value: V;
-    cont: S;
 }
 interface Close {
     kind: "close";
@@ -35,4 +27,5 @@ declare type Fin = {
 };
 declare function send<V, S>(port: Send<V, S>, value: V): S;
 declare function recv<V, S>(port: Recv<V, S>): Promise<[V, S]>;
-export { C2W, W2C, Fin, send, recv };
+declare function close(port: Close): void;
+export { C2W, W2C, Fin, send, recv, close };
