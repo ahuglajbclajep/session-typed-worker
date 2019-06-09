@@ -1,3 +1,4 @@
+/.gitattributes
 /src
 /tsconfig.json
 /examples
