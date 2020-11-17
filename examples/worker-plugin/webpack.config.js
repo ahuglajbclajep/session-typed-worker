@@ -3,7 +3,6 @@ const WorkerPlugin = require("worker-plugin");
 module.exports = {
   mode: "development",
   entry: "./src/index",
-  output: { globalObject: "self" },
   module: {
     rules: [
       {

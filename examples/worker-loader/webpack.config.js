@@ -1,16 +1,14 @@
 module.exports = {
-  mode: "production",
-  entry: "./src/index.ts",
+  mode: "development",
+  entry: "./src/index",
   module: {
     rules: [
       {
         test: /\.ts$/,
         use: "ts-loader",
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
-  resolve: {
-    extensions: [".js", ".ts"]
-  }
+  resolve: { extensions: [".js", ".ts"] },
 };
