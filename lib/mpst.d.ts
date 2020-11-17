@@ -48,4 +48,4 @@ declare type MergeOfferBranch<LS extends OfferLocals> = LS[0] extends infer KS ?
     [GetValues<LS, KS>[0], Merge<GetValues<LS, KS>[1]>]
 ], MPSTError<"OfferBranch: values differ", GetValues<LS, KS>[0]>> : never : never;
 declare type GetValues<LS, K> = LS extends [infer K0, infer L] ? util.IfIsEqual<K, K0, L, never> : never;
-export type { Select, Offer, Close, To, Finish, SelectLocals, OfferLocals };
+export type { Select, Offer, Close, To, Finish, Local, SelectLocals, OfferLocals, };

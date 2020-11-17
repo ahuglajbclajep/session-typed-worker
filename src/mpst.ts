@@ -114,4 +114,13 @@ type GetValues<LS, K> = LS extends [infer K0, infer L]
   ? util.IfIsEqual<K, K0, L, never>
   : never;
 
-export type { Select, Offer, Close, To, Finish, SelectLocals, OfferLocals };
+export type {
+  Select,
+  Offer,
+  Close,
+  To,
+  Finish,
+  Local,
+  SelectLocals,
+  OfferLocals,
+};
