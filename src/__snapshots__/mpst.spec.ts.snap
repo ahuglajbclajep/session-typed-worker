@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`-> Select<"A", { a: MPSTError<"SelectBranch: values differ", string | number>; }> (type) should match snapshot 1`] = `"Select<\\"A\\", { a: MPSTError<\\"SelectBranch: values differ\\", string | number>; }>"`;
+
+exports[`Close (type) should match snapshot 1`] = `"Close"`;
+
+exports[`MPSTError < "Select: destination role conflict", "A" | "B" > (type) should match snapshot 1`] = `"MPSTError<\\"Select: destination role conflict\\", \\"A\\" | \\"B\\">"`;
+
+exports[`MPSTError<"Merge: local type conflict", "select" | "offer"> (type) should match snapshot 1`] = `"MPSTError<\\"Merge: local type conflict\\", \\"select\\" | \\"offer\\">"`;
+
+exports[`MPSTError<"Offer: destination role conflict", "A" | "B"> (type) should match snapshot 1`] = `"MPSTError<\\"Offer: destination role conflict\\", \\"A\\" | \\"B\\">"`;
+
+exports[`Offer<"A", ["a", [string, Close]] | ["b", [string, Close]]> (type) should match snapshot 1`] = `"Offer<\\"A\\", [\\"a\\", [string, Close]] | [\\"b\\", [string, Close]]>"`;
+
+exports[`Offer<"A", ["a", [string, Close]]> (type) should match snapshot 1`] = `"Offer<\\"A\\", [\\"a\\", [string, Close]]>"`;
+
+exports[`Offer<"A", MPSTError<"OfferBranch: values differ", string | number>> (type) should match snapshot 1`] = `"Offer<\\"A\\", MPSTError<\\"OfferBranch: values differ\\", string | number>>"`;
+
+exports[`Select<"A", { a: (v: string) => Close }> (type) should match snapshot 1`] = `"Select<\\"A\\", { a: (v: string) => Close; }>"`;
+
+exports[`Select<"A", MPSTError<"SelectBranch: labels differ", "a" | "b">> (type) should match snapshot 1`] = `"Select<\\"A\\", MPSTError<\\"SelectBranch: labels differ\\", \\"a\\" | \\"b\\">>"`;
