@@ -1,7 +1,7 @@
 {
   "name": "session-typed-worker",
-  "version": "1.0.3",
-  "description": "A deadlock-free communication API for web workers based on (a subset of) session types.",
+  "version": "2.0.0",
+  "description": "A deadlock-free communication API for web workers based on session types.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -17,10 +17,7 @@
   "license": "MIT",
   "bugs": "https://github.com/ahuglajbclajep/session-typed-worker/issues",
   "homepage": "https://github.com/ahuglajbclajep/session-typed-worker#readme",
-  "devDependencies": {
-    "typescript": "^3.2.2"
-  },
-  "peerDependencies": {
-    "worker-loader": "2.x"
+  "dependencies": {
+    "typescript": "^4.0.5"
   }
 }
