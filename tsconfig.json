@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
-    "lib": ["esnext", "webworker"],
+    "lib": ["esnext", "webworker", "dom"],
     "declaration": true,
     "outDir": "lib",
     "strict": true,
