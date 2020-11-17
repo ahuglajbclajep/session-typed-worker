@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2019",
     "module": "esnext",
     "lib": ["esnext", "webworker", "dom"],
     "declaration": true,
     "outDir": "lib",
     "strict": true,
-    // "moduleResolution": "node",
     "esModuleInterop": true,
-    // "skipLibCheck": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src/index.ts"]
