@@ -1,6 +1,6 @@
 import { init, send, recv, close } from "../../../";
 import * as proto from "./protocols";
-const worker = new Worker("./worker", { type: "module" });
+const worker = new Worker(new URL("./worker.ts", import.meta.url));
 
 (async () => {
   const p0 = (await init({

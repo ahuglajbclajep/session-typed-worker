@@ -1,5 +1,4 @@
-const WorkerPlugin = require("worker-plugin");
-
+/** @type {import("webpack").Configuration} */
 module.exports = {
   mode: "development",
   entry: "./src/index",
@@ -12,6 +11,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [new WorkerPlugin()],
-  resolve: { extensions: [".js", ".ts"] },
+  resolve: {
+    extensions: [".js", ".ts"],
+  },
 };

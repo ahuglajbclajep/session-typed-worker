@@ -1,5 +1,22 @@
-import { C2W, W2C, Fin } from "session-typed-worker";
+import { To, Finish } from "../../../";
 
-type CheckNumbersEquality = C2W<number, C2W<number, W2C<boolean, Fin>>>;
+type Roles = "M" | "W";
+type Fin = Finish<Roles>;
+type CheckNumbersEquality = To<
+  "M",
+  "W",
+  {
+    _: [
+      number,
+      To<
+        "M",
+        "W",
+        { _: [number, To<"W", "M", { _: [boolean, Fin] }, Roles>] },
+        Roles
+      >
+    ];
+  },
+  Roles
+>;
 
 export { CheckNumbersEquality };
