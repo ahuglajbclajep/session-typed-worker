@@ -71,10 +71,10 @@ type MergeSelect<SS extends Select<never, SelectLocals>> =
 // MergeSelectBranch<{ l1: (v: V1) => L1 } | { l1: (v: V1) => L2; l2: (v: V2) => L3 }> -> MPSTError<..., ...>
 // MergeSelectBranch<{ l1: (v: V1) => L1 } | { l1: (v: V2) => L2 }> -> MPSTError<..., ...>
 type MergeSelectBranch<LS extends SelectLocals> = util.IfIsEqual<
-  // AllKeys<{ l1: ... } | { l1: ...; l2: ... }> -> "l1" | "l2"
-  util.AllKeys<LS>,
   // keyof ({ l1: ... } | { l1: ...; l2: ... }) -> "l1"
   keyof LS,
+  // AllKeys<{ l1: ... } | { l1: ...; l2: ... }> -> "l1" | "l2"
+  util.AllKeys<LS>,
   // ({ l1: (v: V1) => L1; l2: (v: V2) => L2 } | { l1: (v: V3) => L3; l2: (v: V4) => L4 })["l1"] -> ((v: V1) => L1) | ((v: V3) => L3)
   {
     [L in util.AllKeys<LS>]: util.IfIsSingleton<
@@ -115,12 +115,14 @@ type GetValues<LS, K> = LS extends [infer K0, infer L]
   : never;
 
 export type {
+  To,
+  Finish,
+  Globals,
   Select,
   Offer,
   Close,
-  To,
-  Finish,
   Local,
   SelectLocals,
   OfferLocals,
+  Merge,
 };
