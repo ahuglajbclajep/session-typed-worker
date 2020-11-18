@@ -1,0 +1,22 @@
+name: main
+on: push
+jobs:
+  npm-script:
+    strategy:
+      fail-fast: false
+      matrix:
+        script: [test]
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: npm-
+      - run: npm ci
+      - run: npm run ${{ matrix.script }}
