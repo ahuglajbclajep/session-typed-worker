@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es2019",
+    "target": "esnext",
     "module": "esnext",
-    "lib": ["esnext", "webworker", "dom"],
+    "lib": ["esnext", "webworker", "dom"], // for rollup-plugin-typescript2
     "declaration": true,
-    "outDir": "lib",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/index.ts"]
+  // see also: https://github.com/ezolenko/rollup-plugin-typescript2/issues/211
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.spec.ts"]
 }
