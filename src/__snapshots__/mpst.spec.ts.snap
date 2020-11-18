@@ -1,10 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`-> Select<"A", { a: MPSTError<"SelectBranch: values differ", string | number>; }> (type) should match snapshot 1`] = `"Select<\\"A\\", { a: MPSTError<\\"SelectBranch: values differ\\", string | number>; }>"`;
-
 exports[`Close (type) should match snapshot 1`] = `"Close"`;
 
+exports[`G0["B"] (type) should match snapshot 1`] = `"Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Close; }>]] | [\\"b\\", [{}, Select<\\"C\\", { b1: (v: {}) => Close; }>]]>"`;
+
+exports[`G1["A"] (type) should match snapshot 1`] = `"Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Select<\\"B\\", { a: (v: {}) => any; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>]]>; b: (v: {}) => Close; }>"`;
+
+exports[`G1["B"] (type) should match snapshot 1`] = `"Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => any; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>"`;
+
+exports[`G1["B"] (type) should match snapshot 2`] = `"Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => Offer<\\"A\\", [\\"a\\", [{}, Select<\\"C\\", { a1: (v: string) => any; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>; }>]] | [\\"b\\", [{}, Select<\\"C\\", { a1: (v: {}) => Close; }>]]>"`;
+
 exports[`MPSTError < "Select: destination role conflict", "A" | "B" > (type) should match snapshot 1`] = `"MPSTError<\\"Select: destination role conflict\\", \\"A\\" | \\"B\\">"`;
+
+exports[`MPSTError<"Merge: local type conflict", "offer" | "select"> (type) should match snapshot 1`] = `"MPSTError<\\"Merge: local type conflict\\", \\"select\\" | \\"offer\\">"`;
+
+exports[`MPSTError<"Merge: local type conflict", "offer"> (type) should match snapshot 1`] = `"MPSTError<\\"Merge: local type conflict\\", \\"offer\\">"`;
 
 exports[`MPSTError<"Merge: local type conflict", "select" | "offer"> (type) should match snapshot 1`] = `"MPSTError<\\"Merge: local type conflict\\", \\"select\\" | \\"offer\\">"`;
 
@@ -16,6 +26,14 @@ exports[`Offer<"A", ["a", [string, Close]]> (type) should match snapshot 1`] = `
 
 exports[`Offer<"A", MPSTError<"OfferBranch: values differ", string | number>> (type) should match snapshot 1`] = `"Offer<\\"A\\", MPSTError<\\"OfferBranch: values differ\\", string | number>>"`;
 
+exports[`Offer<"B", ["a1", [string, Select<"A", { a2: (v: boolean) => Close }>]] | ["b1", [{}, Close]]> (type) should match snapshot 1`] = `"Offer<\\"B\\", [\\"a1\\", [string, Select<\\"A\\", { a2: (v: boolean) => Close; }>]] | [\\"b1\\", [{}, Close]]>"`;
+
+exports[`Offer<"B", MPSTError<"OfferBranch: values differ", string | {}>> (type) should match snapshot 1`] = `"Offer<\\"B\\", MPSTError<\\"OfferBranch: values differ\\", string | {}>>"`;
+
 exports[`Select<"A", { a: (v: string) => Close }> (type) should match snapshot 1`] = `"Select<\\"A\\", { a: (v: string) => Close; }>"`;
 
+exports[`Select<"A", { a: MPSTError<"SelectBranch: values differ", string | number>; }> (type) should match snapshot 1`] = `"Select<\\"A\\", { a: MPSTError<\\"SelectBranch: values differ\\", string | number>; }>"`;
+
 exports[`Select<"A", MPSTError<"SelectBranch: labels differ", "a" | "b">> (type) should match snapshot 1`] = `"Select<\\"A\\", MPSTError<\\"SelectBranch: labels differ\\", \\"a\\" | \\"b\\">>"`;
+
+exports[`Select<"B", { a: (v: {}) => Offer<"C", ["a2", [boolean, Close]]>; b: (v: {}) => Close }> (type) should match snapshot 1`] = `"Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Close]]>; b: (v: {}) => Close; }>"`;
