@@ -1,7 +1,7 @@
-/tsconfig.json
-/.gitattributes
-
-/src
-/lib/mpst.js
-/lib/util.js
+/.github
 /examples
+/src
+
+/.gitattributes
+/*.config.js
+/tsconfig.json
