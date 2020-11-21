@@ -1,0 +1,38 @@
+{
+  "extends": [
+    "config:base",
+    ":automergePatch",
+    ":automergeBranch",
+    ":maintainLockFilesMonthly",
+    ":label(renovate)",
+    ":prNotPending",
+    ":dependencyDashboard",
+    ":timezone(Asia/Tokyo)"
+  ],
+  "npm": {
+    "rangeStrategy": "bump"
+  },
+  "prNotPendingHours": 72,
+  "major": {
+    "stabilityDays": 4
+  },
+  "minor": {
+    "stabilityDays": 2,
+    "schedule": ["before 8am on monday"]
+  },
+  "patch": {
+    "stabilityDays": 2
+  },
+  "packageRules": [
+    {
+      "groupName": "dependencies",
+      "depTypeList": ["dependencies"],
+      "updateTypes": ["minor"]
+    },
+    {
+      "groupName": "dev dependencies",
+      "depTypeList": ["devDependencies"],
+      "updateTypes": ["minor"]
+    }
+  ]
+}
