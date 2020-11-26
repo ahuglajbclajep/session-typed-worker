@@ -29,7 +29,7 @@ interface MPSTError<Message, Cause> {
     message: Message;
     cause: Cause;
 }
-declare type To<R1 extends RS, R2 extends RS, GS extends Globals, RS extends string> = {
+declare type To<RS extends string, R1 extends RS, R2 extends RS, GS extends Globals> = {
     [R in RS]: R extends R1 ? Select<R2, {
         [L in keyof GS]: (v: GS[L][0]) => GS[L][1][R1];
     }> : R extends R2 ? Offer<R1, {

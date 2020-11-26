@@ -31,7 +31,7 @@ interface MPSTError<Message, Cause> {
 }
 
 // To<"A", "B", { l1: [V1, G1]; l2: [V2, G2]; ... }>
-type To<R1 extends RS, R2 extends RS, GS extends Globals, RS extends string> = {
+type To<RS extends string, R1 extends RS, R2 extends RS, GS extends Globals> = {
   [R in RS]: R extends R1
     ? // Select<R2, { l1: (k: V1) => G1[R1]; l2: (k: V2) => G2[R1]; ... }>
       Select<R2, { [L in keyof GS]: (v: GS[L][0]) => GS[L][1][R1] }>

@@ -68,9 +68,9 @@ me0;
 
 type Roles = "A" | "B" | "C";
 type FinishABC = Finish<Roles>;
-type AtoB<GS extends Globals> = To<"A", "B", GS, Roles>;
-type BtoC<GS extends Globals> = To<"B", "C", GS, Roles>;
-type CtoA<GS extends Globals> = To<"C", "A", GS, Roles>;
+type AtoB<GS extends Globals> = To<Roles, "A", "B", GS>;
+type BtoC<GS extends Globals> = To<Roles, "B", "C", GS>;
+type CtoA<GS extends Globals> = To<Roles, "C", "A", GS>;
 
 type G0 = AtoB<{
   a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, FinishABC] }>] }>];
@@ -106,7 +106,7 @@ declare const g1c: G1["B"];
 // @dts-jest:pass:snap G1["B"]
 g1b;
 
-type CtoB<GS extends Globals> = To<"C", "B", GS, Roles>;
+type CtoB<GS extends Globals> = To<Roles, "C", "B", GS>;
 type G2 = AtoB<{
   a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, FinishABC] }>] }>];
   b: [{}, CtoB<{ b1: [{}, FinishABC] }>];

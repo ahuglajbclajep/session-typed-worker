@@ -2,6 +2,7 @@
 module.exports = {
   mode: "development",
   entry: "./src/index",
+  target: ["web", "es2019"], // for Object.fromEntries()
   module: {
     rules: [
       {

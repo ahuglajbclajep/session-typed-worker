@@ -59,23 +59,23 @@ async function init(selfOrWorkers: SelfOrWorkers): Promise<Local> {
 }
 
 function send<R extends string, LS extends SelectLocals, L extends keyof LS>(
-  channel: Select<R, LS>,
+  port: Select<R, LS>,
   role: R,
   label: L,
   value: Parameters<LS[L]>[0]
 ): ReturnType<LS[L]> {
-  ((channel as any) as Context).ports[role].postMessage([label, value]);
-  return channel as any;
+  ((port as any) as Context).ports[role].postMessage([label, value]);
+  return port as any;
 }
 
 async function recv<R extends string, LS extends OfferLocals>(
-  channel: Offer<R, LS>,
+  port: Offer<R, LS>,
   role: R
 ): Promise<LS> {
-  const { queues, ports } = (channel as any) as Context;
+  const { queues, ports } = (port as any) as Context;
   if (0 < queues[role].length) {
     const [label, value] = queues[role].shift()!;
-    return [label, [value, channel]] as any;
+    return [label, [value, port]] as any;
   }
 
   const onmessage = ports[role].onmessage;
@@ -84,7 +84,7 @@ async function recv<R extends string, LS extends OfferLocals>(
       (ports[role].onmessage = (e) => {
         ports[role].onmessage = onmessage;
         const [label, value] = e.data as Message;
-        resolve([label, [value, channel]] as any);
+        resolve([label, [value, port]] as any);
       })
   );
 }
