@@ -38,8 +38,8 @@ type To<RS extends string, R1 extends RS, R2 extends RS, GS extends Globals> = {
     : R extends R2
     ? // Offer<R1, ["l1", [V1, G1[R2]]] | ["l2", [V2, G2[R2]]] | ... >
       Offer<R1, { [L in keyof GS]: [L, [GS[L][0], GS[L][1][R2]]] }[keyof GS]>
-    : // Merge<G1[R] | G2[R] | ...>
-      Merge<GS[keyof GS][1][R]>;
+    : // merge for an incomplete session type will cause an error in recursion, so do it last
+      GS[keyof GS][1][R];
 };
 
 type Finish<RS extends string> = Record<RS, Close>;
@@ -117,6 +117,7 @@ type GetValues<LS, K> = LS extends [infer K0, infer L]
 export type {
   To,
   Finish,
+  Merge,
   Globals,
   Select,
   Offer,
@@ -124,5 +125,4 @@ export type {
   Local,
   SelectLocals,
   OfferLocals,
-  Merge,
 };
