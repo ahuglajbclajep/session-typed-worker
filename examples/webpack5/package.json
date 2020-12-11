@@ -4,7 +4,8 @@
   "description": "An example using webpack@5",
   "private": true,
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "start": "python3 -m http.server -d dist"
   },
   "devDependencies": {
     "ts-loader": "^8.0.11",

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2019", // for Object.fromEntries()
     "module": "esnext",
     "strict": true,
     "moduleResolution": "node",

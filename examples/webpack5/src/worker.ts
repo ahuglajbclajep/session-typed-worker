@@ -1,8 +1,8 @@
-import { init, send, recv, close } from "../../../";
-import * as proto from "./protocols";
+import { Merge, init, send, recv, close } from "../../../";
+import { CheckNumbersEquality } from "./protocols";
 
 (async () => {
-  const p1 = (await init(self)) as proto.CheckNumbersEquality["W"];
+  const p1 = (await init(self)) as Merge<CheckNumbersEquality["W"]>;
   const p2 = await recv(p1, "M");
   switch (p2[0]) {
     case "_": {

@@ -34,7 +34,7 @@ declare type To<RS extends string, R1 extends RS, R2 extends RS, GS extends Glob
         [L in keyof GS]: (v: GS[L][0]) => GS[L][1][R1];
     }> : R extends R2 ? Offer<R1, {
         [L in keyof GS]: [L, [GS[L][0], GS[L][1][R2]]];
-    }[keyof GS]> : Merge<GS[keyof GS][1][R]>;
+    }[keyof GS]> : GS[keyof GS][1][R];
 };
 declare type Finish<RS extends string> = Record<RS, Close>;
 declare type Merge<LS extends Local> = [LS] extends [Select<never, SelectLocals>] ? MergeSelect<LS> : [LS] extends [Offer<never, OfferLocals>] ? MergeOffer<LS> : [LS] extends [Close] ? Close : MPSTError<"Merge: local type conflict", LS["kind"]>;
@@ -48,4 +48,4 @@ declare type MergeOfferBranch<LS extends OfferLocals> = LS[0] extends infer KS ?
     [GetValues<LS, KS>[0], Merge<GetValues<LS, KS>[1]>]
 ], MPSTError<"OfferBranch: values differ", GetValues<LS, KS>[0]>> : never : never;
 declare type GetValues<LS, K> = LS extends [infer K0, infer L] ? util.IfIsEqual<K, K0, L, never> : never;
-export type { To, Finish, Globals, Select, Offer, Close, Local, SelectLocals, OfferLocals, Merge, };
+export type { To, Finish, Merge, Globals, Select, Offer, Close, Local, SelectLocals, OfferLocals, };
