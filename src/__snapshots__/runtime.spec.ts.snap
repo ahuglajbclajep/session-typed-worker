@@ -8,9 +8,9 @@ exports[`Argument of type '"r"' is not assignable to parameter of type '"l"'. (t
 
 exports[`Argument of type 'string' is not assignable to parameter of type 'number'. (type) should match snapshot 1`] = `"Argument of type 'string' is not assignable to parameter of type 'number'."`;
 
-exports[`Close (type) should match snapshot 1`] = `"any"`;
+exports[`Close (type) should match snapshot 1`] = `"Close"`;
 
-exports[`Promise<["l", [number, Close]]> (type) should match snapshot 1`] = `"any"`;
+exports[`Promise<{ label: "l"; value: number; port: Close }> (type) should match snapshot 1`] = `"Promise<{ label: \\"l\\"; value: number; port: Close; }>"`;
 
 exports[`Property 'r' is missing in type '{ l: (k: number) => Close; }'. (type) should match snapshot 1`] = `
 "Argument of type 'Select<\\"A\\", { l: (k: number) => Close; }>' is not assignable to parameter of type 'Select<\\"A\\", { r: (k: number) => Close; }>'.

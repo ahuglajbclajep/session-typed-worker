@@ -1,10 +1,10 @@
 import type {
-  Local,
   Select,
-  SelectLocals,
   Offer,
-  OfferLocals,
   Close,
+  Local,
+  SelectLocals,
+  OfferLocals,
 } from "./mpst";
 
 type Message = [string, unknown];
@@ -68,14 +68,18 @@ function send<R extends string, LS extends SelectLocals, L extends keyof LS>(
   return port as any;
 }
 
+type OfferLocalsToObj<LS extends OfferLocals> = LS extends any
+  ? { label: LS[0]; value: LS[1][0]; port: LS[1][1] }
+  : never;
+
 async function recv<R extends string, LS extends OfferLocals>(
   port: Offer<R, LS>,
   role: R
-): Promise<LS> {
+): Promise<OfferLocalsToObj<LS>> {
   const { queues, ports } = (port as any) as Context;
   if (0 < queues[role].length) {
     const [label, value] = queues[role].shift()!;
-    return [label, [value, port]] as any;
+    return { label, value, port } as any;
   }
 
   const onmessage = ports[role].onmessage;
@@ -84,11 +88,11 @@ async function recv<R extends string, LS extends OfferLocals>(
       (ports[role].onmessage = (e) => {
         ports[role].onmessage = onmessage;
         const [label, value] = e.data as Message;
-        resolve([label, [value, port]] as any);
+        resolve({ label, value, port } as any);
       })
   );
 }
 
-function close(channel: Close) {}
+function close(port: Close) {}
 
 export { init, send, recv, close };

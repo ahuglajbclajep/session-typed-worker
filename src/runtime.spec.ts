@@ -4,8 +4,9 @@ import type { Select, Offer, Close } from "./mpst";
 ////////////////////////////// test cases of send //////////////////////////////
 
 declare const s: Select<"A", { l: (k: number) => Close }>;
+
 // @dts-jest:pass:snap Close
-const s0 = send<"A", { l: (k: number) => Close }, "l">(s, "A", "l", 42);
+send<"A", { l: (k: number) => Close }, "l">(s, "A", "l", 42);
 
 // @dts-jest:fail:snap Argument of type '"B"' is not assignable to parameter of type '"A"'.
 send<"A", { l: (k: number) => Close }, "l">(s, "B", "l", 42);
@@ -31,8 +32,9 @@ send<"A", { l: (k: string) => Close }, "l">(s, "A", "l", 42);
 ////////////////////////////// test cases of recv //////////////////////////////
 
 declare const o: Offer<"B", ["l", [number, Close]]>;
-// @dts-jest:pass:snap Promise<["l", [number, Close]]>
-const o0 = recv<"B", ["l", [number, Close]]>(o, "B");
+
+// @dts-jest:pass:snap Promise<{ label: "l"; value: number; port: Close }>
+recv<"B", ["l", [number, Close]]>(o, "B");
 
 // @dts-jest:fail:snap Argument of type '"A"' is not assignable to parameter of type '"B"'.
 recv<"B", ["l", [number, Close]]>(o, "A");

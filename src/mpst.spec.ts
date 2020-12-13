@@ -1,4 +1,13 @@
-import type { Select, Offer, Close, Merge, Finish, Globals, To } from "./mpst";
+import type {
+  Merge,
+  Select,
+  Offer,
+  Close,
+  To,
+  Finish,
+  Init,
+  Globals,
+} from "./mpst";
 
 ///////////////////////////// test cases of merge /////////////////////////////
 
@@ -77,15 +86,15 @@ type G0 = AtoB<{
   b: [{}, BtoC<{ b1: [{}, FinishABC] }>];
 }>;
 
-declare const g0a: Merge<G0["A"]>;
+declare const g0a: Init<G0["A"]>;
 // @dts-jest:pass:snap Select<"B", { a: (v: {}) => Offer<"C", ["a2", [boolean, Close]]>; b: (v: {}) => Close }>
 g0a;
 
-declare const g0b: Merge<G0["B"]>;
+declare const g0b: Init<G0["B"]>;
 // @dts-jest:pass:snap G0["B"]
 g0b;
 
-declare const g0c: Merge<G0["C"]>;
+declare const g0c: Init<G0["C"]>;
 // @dts-jest:pass:snap Offer<"B", ["a1", [string, Select<"A", { a2: (v: boolean) => Close }>]] | ["b1", [{}, Close]]>
 g0c;
 
@@ -94,15 +103,15 @@ type G1 = AtoB<{
   b: [{}, BtoC<{ b1: [{}, FinishABC] }>];
 }>;
 
-declare const g1a: Merge<G1["A"]>;
+declare const g1a: Init<G1["A"]>;
 // @dts-jest:pass:snap G1["A"]
 g1a;
 
-declare const g1b: Merge<G1["B"]>;
+declare const g1b: Init<G1["B"]>;
 // @dts-jest:pass:snap G1["B"]
 g1b;
 
-declare const g1c: Merge<G1["C"]>;
+declare const g1c: Init<G1["C"]>;
 // @dts-jest:pass:snap G1["C"]
 g1c;
 
@@ -111,7 +120,7 @@ type G2 = AtoB<{
   a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, FinishABC] }>] }>];
   b: [{}, CtoB<{ b1: [{}, FinishABC] }>];
 }>;
-declare const g2c: Merge<G2["C"]>;
+declare const g2c: Init<G2["C"]>;
 // @dts-jest:pass:snap MPSTError<"Merge: local type conflict", "offer" | "select">
 g2c;
 
@@ -119,7 +128,7 @@ type G3 = AtoB<{
   a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, FinishABC] }>] }>];
   b: [{}, BtoC<{ a1: [{}, FinishABC] }>];
 }>;
-declare const g3c: Merge<G3["C"]>;
+declare const g3c: Init<G3["C"]>;
 // @dts-jest:pass:snap Offer<"B", MPSTError<"OfferBranch: values differ", string | {}>>
 g3c;
 
@@ -128,6 +137,6 @@ type G4 = AtoB<{
   a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, FinishABC] }>] }>];
   b: [{}, BtoC<{ b1: [{}, FinishAB] }>];
 }>;
-declare const g4c: Merge<G4["C"]>;
+declare const g4c: Init<G4["C"]>;
 // @dts-jest:pass:snap MPSTError<"Merge: local type conflict", "offer">
 g4c;

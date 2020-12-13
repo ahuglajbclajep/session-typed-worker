@@ -44,6 +44,8 @@ type To<RS extends string, R1 extends RS, R2 extends RS, GS extends Globals> = {
 
 type Finish<RS extends string> = Record<RS, Close>;
 
+type Init<LS extends Local> = Merge<LS>;
+
 // see: https://github.com/microsoft/TypeScript/issues/29368
 // Merge<Select<..., ...> | Select<..., ...>> -> Select<..., ...>
 // Merge<Offer<..., ...> | Offer<..., ...>> -> Offer<..., ...>
@@ -117,8 +119,9 @@ type GetValues<LS, K> = LS extends [infer K0, infer L]
 export type {
   To,
   Finish,
-  Merge,
+  Init,
   Globals,
+  Merge,
   Select,
   Offer,
   Close,
