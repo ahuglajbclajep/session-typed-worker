@@ -3,8 +3,8 @@ import type {
   Select,
   Offer,
   Close,
-  To,
-  Finish,
+  CommBase,
+  EndBase,
   Init,
   Globals,
 } from "./mpst";
@@ -76,14 +76,14 @@ me0;
 ////////////////////////// test cases of global type //////////////////////////
 
 type Roles = "A" | "B" | "C";
-type FinishABC = Finish<Roles>;
-type AtoB<GS extends Globals> = To<Roles, "A", "B", GS>;
-type BtoC<GS extends Globals> = To<Roles, "B", "C", GS>;
-type CtoA<GS extends Globals> = To<Roles, "C", "A", GS>;
+type EndABC = EndBase<Roles>;
+type AtoB<GS extends Globals> = CommBase<Roles, "A", "B", GS>;
+type BtoC<GS extends Globals> = CommBase<Roles, "B", "C", GS>;
+type CtoA<GS extends Globals> = CommBase<Roles, "C", "A", GS>;
 
 type G0 = AtoB<{
-  a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, FinishABC] }>] }>];
-  b: [{}, BtoC<{ b1: [{}, FinishABC] }>];
+  a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, EndABC] }>] }>];
+  b: [{}, BtoC<{ b1: [{}, EndABC] }>];
 }>;
 
 declare const g0a: Init<G0["A"]>;
@@ -100,7 +100,7 @@ g0c;
 
 type G1 = AtoB<{
   a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, G1] }>] }>];
-  b: [{}, BtoC<{ b1: [{}, FinishABC] }>];
+  b: [{}, BtoC<{ b1: [{}, EndABC] }>];
 }>;
 
 declare const g1a: Init<G1["A"]>;
@@ -115,27 +115,27 @@ declare const g1c: Init<G1["C"]>;
 // @dts-jest:pass:snap G1["C"]
 g1c;
 
-type CtoB<GS extends Globals> = To<Roles, "C", "B", GS>;
+type CtoB<GS extends Globals> = CommBase<Roles, "C", "B", GS>;
 type G2 = AtoB<{
-  a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, FinishABC] }>] }>];
-  b: [{}, CtoB<{ b1: [{}, FinishABC] }>];
+  a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, EndABC] }>] }>];
+  b: [{}, CtoB<{ b1: [{}, EndABC] }>];
 }>;
 declare const g2c: Init<G2["C"]>;
 // @dts-jest:pass:snap MPSTError<"Merge: local type conflict", "offer" | "select">
 g2c;
 
 type G3 = AtoB<{
-  a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, FinishABC] }>] }>];
-  b: [{}, BtoC<{ a1: [{}, FinishABC] }>];
+  a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, EndABC] }>] }>];
+  b: [{}, BtoC<{ a1: [{}, EndABC] }>];
 }>;
 declare const g3c: Init<G3["C"]>;
 // @dts-jest:pass:snap Offer<"B", MPSTError<"OfferBranch: values differ", string | {}>>
 g3c;
 
-type FinishAB = Finish<"A" | "B">;
+type EndAB = EndBase<"A" | "B">;
 type G4 = AtoB<{
-  a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, FinishABC] }>] }>];
-  b: [{}, BtoC<{ b1: [{}, FinishAB] }>];
+  a: [{}, BtoC<{ a1: [string, CtoA<{ a2: [boolean, EndABC] }>] }>];
+  b: [{}, BtoC<{ b1: [{}, EndAB] }>];
 }>;
 declare const g4c: Init<G4["C"]>;
 // @dts-jest:pass:snap MPSTError<"Merge: local type conflict", "offer">

@@ -1,28 +1,28 @@
 import type * as util from "./util";
 
-type Local = { kind: "close" | "select" | "offer" };
-type SelectLocals = { [key: string]: (v: never) => Local };
+type Local = { _tag: "close" | "select" | "offer" };
+type SelectLocals = { [label: string]: (v: never) => Local };
 type OfferLocals = [string, [{}, Local]];
 
-type Global = { [key: string]: Local };
-type Globals = { [key: string]: [{}, Global] };
+type Global = { [label: string]: Local };
+type Globals = { [label: string]: [{}, Global] };
 
 // Select<"A", { l1: (v: V1) => L1; l2: (v: V2) => L2; ... }>
 interface Select<R extends string, LS> {
-  kind: "select";
+  _tag: "select";
   role: (r: R) => void;
-  branch: LS;
+  conts: LS;
 }
 
 // Offer<"A", ["l1", [V1, L1]] | ["l2", [V2, L2]] | ...>
 interface Offer<R extends string, LS> {
-  kind: "offer";
+  _tag: "offer";
   role: (r: R) => void;
-  branch: LS;
+  conts: LS;
 }
 
 interface Close {
-  kind: "close";
+  _tag: "close";
 }
 
 interface MPSTError<Message, Cause> {
@@ -30,8 +30,13 @@ interface MPSTError<Message, Cause> {
   cause: Cause;
 }
 
-// To<"A", "B", { l1: [V1, G1]; l2: [V2, G2]; ... }>
-type To<RS extends string, R1 extends RS, R2 extends RS, GS extends Globals> = {
+// CommBase<"A", "B", { l1: [V1, G1]; l2: [V2, G2]; ... }>
+type CommBase<
+  RS extends string,
+  R1 extends RS,
+  R2 extends RS,
+  GS extends Globals
+> = {
   [R in RS]: R extends R1
     ? // Select<R2, { l1: (k: V1) => G1[R1]; l2: (k: V2) => G2[R1]; ... }>
       Select<R2, { [L in keyof GS]: (v: GS[L][0]) => GS[L][1][R1] }>
@@ -42,7 +47,7 @@ type To<RS extends string, R1 extends RS, R2 extends RS, GS extends Globals> = {
       GS[keyof GS][1][R];
 };
 
-type Finish<RS extends string> = Record<RS, Close>;
+type EndBase<RS extends string> = Record<RS, Close>;
 
 type Init<LS extends Local> = Merge<LS>;
 
@@ -57,7 +62,7 @@ type Merge<LS extends Local> = [LS] extends [Select<never, SelectLocals>]
   ? MergeOffer<LS>
   : [LS] extends [Close]
   ? Close
-  : MPSTError<"Merge: local type conflict", LS["kind"]>;
+  : MPSTError<"Merge: local type conflict", LS["_tag"]>;
 
 // MergeSelect<Select<"A", ...> | Select<"A", ...>> -> Select<"A", ...>
 // MergeSelect<Select<"A", ...> | Select<"B", ...>> -> MPSTError<..., ...>
@@ -65,7 +70,7 @@ type MergeSelect<SS extends Select<never, SelectLocals>> =
   // (Select<"A", ...> | Select<"B", ...>)["role"] -> "A" | "B"
   util.IfIsSingleton<
     SS["role"],
-    Select<Parameters<SS["role"]>[0], MergeSelectBranch<SS["branch"]>>,
+    Select<Parameters<SS["role"]>[0], MergeSelectBranch<SS["conts"]>>,
     MPSTError<"Select: destination role conflict", Parameters<SS["role"]>[0]>
   >;
 
@@ -92,7 +97,7 @@ type MergeSelectBranch<LS extends SelectLocals> = util.IfIsEqual<
 // MergeOffer<Offer<"A", ...> | Offer<"B", ...>> -> MPSTError<..., ...>
 type MergeOffer<OS extends Offer<never, OfferLocals>> = util.IfIsSingleton<
   OS["role"],
-  Offer<Parameters<OS["role"]>[0], MergeOfferBranch<OS["branch"]>>,
+  Offer<Parameters<OS["role"]>[0], MergeOfferBranch<OS["conts"]>>,
   MPSTError<"Offer: destination role conflict", Parameters<OS["role"]>[0]>
 >;
 
@@ -117,8 +122,8 @@ type GetValues<LS, K> = LS extends [infer K0, infer L]
   : never;
 
 export type {
-  To,
-  Finish,
+  CommBase,
+  EndBase,
   Init,
   Globals,
   Merge,
