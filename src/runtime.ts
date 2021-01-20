@@ -25,7 +25,7 @@ async function init(threads?: Threads): Promise<Local> {
   } else {
     const selves = Object.entries(threads).filter(([, t]) => t === self);
     if (selves.length !== 1)
-      throw Error("cannot pass more than one self to the init function.");
+      throw Error("cannot pass more than one 'self' to the init function.");
     const roleOfSelf = selves[0][0];
 
     let portMap: Record<string, Ports> = Object.fromEntries(

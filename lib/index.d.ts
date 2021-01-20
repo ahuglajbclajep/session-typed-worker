@@ -1,2 +1,2 @@
-export type { To, Finish, Merge, Globals } from "./mpst";
-export { init, send, recv, close } from "./runtime";
+export type { CommBase, EndBase, Init, Globals } from "./mpst";
+export { init, send, receive, close } from "./runtime";

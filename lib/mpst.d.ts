@@ -1,51 +1,57 @@
 import type * as util from "./util";
 declare type Local = {
-    kind: "close" | "select" | "offer";
+    _tag: "close" | "select" | "offer";
 };
-declare type SelectLocals = {
-    [key: string]: (v: never) => Local;
+declare type SelectConts = {
+    [label: string]: (v: never) => Local;
 };
-declare type OfferLocals = [string, [{}, Local]];
+declare type OfferConts = [string, [{}, Local]];
 declare type Global = {
-    [key: string]: Local;
+    [role: string]: Local;
 };
 declare type Globals = {
-    [key: string]: [{}, Global];
+    [label: string]: [{}, Global];
 };
-interface Select<R extends string, LS> {
-    kind: "select";
-    role: (r: R) => void;
-    branch: LS;
+interface Select<Role extends string, Conts> {
+    _tag: "select";
+    role: (r: Role) => void;
+    conts: Conts;
 }
-interface Offer<R extends string, LS> {
-    kind: "offer";
-    role: (r: R) => void;
-    branch: LS;
+interface Offer<Role extends string, Conts> {
+    _tag: "offer";
+    role: (r: Role) => void;
+    conts: Conts;
 }
 interface Close {
-    kind: "close";
+    _tag: "close";
 }
-interface MPSTError<Message, Cause> {
-    message: Message;
-    cause: Cause;
-}
-declare type To<RS extends string, R1 extends RS, R2 extends RS, GS extends Globals> = {
-    [R in RS]: R extends R1 ? Select<R2, {
-        [L in keyof GS]: (v: GS[L][0]) => GS[L][1][R1];
-    }> : R extends R2 ? Offer<R1, {
-        [L in keyof GS]: [L, [GS[L][0], GS[L][1][R2]]];
-    }[keyof GS]> : GS[keyof GS][1][R];
+declare type CommBase<Roles extends string, Role1 extends Roles, Role2 extends Roles, Conts extends Globals> = {
+    [Role in Roles]: Role extends Role1 ? Select<Role2, {
+        [L in keyof Conts]: (v: Conts[L][0]) => Conts[L][1][Role];
+    }> : Role extends Role2 ? Offer<Role1, {
+        [L in keyof Conts]: [L, [Conts[L][0], Conts[L][1][Role]]];
+    }[keyof Conts]> : Conts[keyof Conts][1][Role];
 };
-declare type Finish<RS extends string> = Record<RS, Close>;
-declare type Merge<LS extends Local> = [LS] extends [Select<never, SelectLocals>] ? MergeSelect<LS> : [LS] extends [Offer<never, OfferLocals>] ? MergeOffer<LS> : [LS] extends [Close] ? Close : MPSTError<"Merge: local type conflict", LS["kind"]>;
-declare type MergeSelect<SS extends Select<never, SelectLocals>> = util.IfIsSingleton<SS["role"], Select<Parameters<SS["role"]>[0], MergeSelectBranch<SS["branch"]>>, MPSTError<"Select: destination role conflict", Parameters<SS["role"]>[0]>>;
-declare type MergeSelectBranch<LS extends SelectLocals> = util.IfIsEqual<keyof LS, util.AllKeys<LS>, {
-    [L in util.AllKeys<LS>]: util.IfIsSingleton<Parameters<LS[L]>[0], (v: Parameters<LS[L]>[0]) => Merge<ReturnType<LS[L]>>, MPSTError<"SelectBranch: values differ", Parameters<LS[L]>[0]>>;
-}, MPSTError<"SelectBranch: labels differ", util.AllKeys<LS>>>;
-declare type MergeOffer<OS extends Offer<never, OfferLocals>> = util.IfIsSingleton<OS["role"], Offer<Parameters<OS["role"]>[0], MergeOfferBranch<OS["branch"]>>, MPSTError<"Offer: destination role conflict", Parameters<OS["role"]>[0]>>;
-declare type MergeOfferBranch<LS extends OfferLocals> = LS[0] extends infer KS ? KS extends any ? util.IfIsSingleton<GetValues<LS, KS>[0], [
-    KS,
-    [GetValues<LS, KS>[0], Merge<GetValues<LS, KS>[1]>]
-], MPSTError<"OfferBranch: values differ", GetValues<LS, KS>[0]>> : never : never;
-declare type GetValues<LS, K> = LS extends [infer K0, infer L] ? util.IfIsEqual<K, K0, L, never> : never;
-export type { To, Finish, Merge, Globals, Select, Offer, Close, Local, SelectLocals, OfferLocals, };
+interface MergeError<Message, Reason> {
+    message: Message;
+    reason: Reason;
+}
+declare type EndBase<RS extends string> = Record<RS, Close>;
+declare type Init<Locals extends Local> = Merge<Locals>;
+declare type Merge<Locals extends Local> = [Locals] extends [Select<never, SelectConts>] ? MergeSelect<Locals> : [Locals] extends [Offer<never, OfferConts>] ? MergeOffer<Locals> : [Locals] extends [Close] ? Close : MergeError<"Merge: local type conflict", Locals["_tag"]>;
+declare type MergeSelect<Selects extends Select<never, SelectConts>> = util.IfIsSingleton<Selects["role"], Select<Parameters<Selects["role"]>[0], MergeSelectBranch<Selects["conts"]>>, MergeError<"Select: destination role conflict", Parameters<Selects["role"]>[0]>>;
+declare type MergeSelectBranch<Conts extends SelectConts> = util.IfIsEqual<keyof Conts, // { l1: ... } | { l1: ...; l2: ... } -> "l1"
+AllLabels<Conts>, // { l1: ... } | { l1: ...; l2: ... } -> "l1" | "l2"
+{
+    [L in AllLabels<Conts>]: util.IfIsSingleton<Parameters<Conts[L]>[0], // V1
+    (v: Parameters<Conts[L]>[0]) => Merge<ReturnType<Conts[L]>>, MergeError<"SelectBranch: values differ", Parameters<Conts[L]>[0]>>;
+}, MergeError<"SelectBranch: labels differ", AllLabels<Conts>>>;
+declare type AllLabels<Conts> = Conts extends any ? keyof Conts : undefined;
+declare type MergeOffer<Offers extends Offer<never, OfferConts>> = util.IfIsSingleton<Offers["role"], Offer<Parameters<Offers["role"]>[0], MergeOfferBranch<Offers["conts"]>>, MergeError<"Offer: destination role conflict", Parameters<Offers["role"]>[0]>>;
+declare type MergeOfferBranch<Conts extends OfferConts> = Conts[0] extends infer LS ? LS extends any ? util.IfIsSingleton<GetPairs<Conts, LS>[0], // ex. V1
+[
+    LS,
+    [GetPairs<Conts, LS>[0], Merge<GetPairs<Conts, LS>[1]>]
+], MergeError<"OfferBranch: values differ", GetPairs<Conts, LS>[0]>> : never : never;
+declare type GetPairs<Conts, Label> = Conts extends [infer Label0, infer Pair] ? util.IfIsEqual<Label, Label0, Pair, never> : never;
+export type { CommBase, EndBase, Init, Globals, Merge, Select, Offer, Close, Local, SelectConts, OfferConts, };
