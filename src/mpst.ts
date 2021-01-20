@@ -59,7 +59,6 @@ type EndBase<RS extends string> = Record<RS, Close>;
 
 type Init<Locals extends Local> = Merge<Locals>;
 
-// see: https://github.com/microsoft/TypeScript/issues/29368
 // Select<...> | Select<...> -> Select<...>
 // Offer<...> | Offer<...>   -> Offer<...>
 // Close | Close             -> Close
@@ -91,17 +90,22 @@ type MergeSelect<
 // { l1: (v: V1) => L1 } | { l1: (v: V2) => L2 } -> { l1: MergeError<...> }
 type MergeSelectBranch<Conts extends SelectConts> = util.IfIsEqual<
   keyof Conts, // { l1: ... } | { l1: ...; l2: ... } -> "l1"
-  util.AllKeys<Conts>, // { l1: ... } | { l1: ...; l2: ... } -> "l1" | "l2"
+  AllLabels<Conts>, // { l1: ... } | { l1: ...; l2: ... } -> "l1" | "l2"
   {
-    [L in util.AllKeys<Conts>]: util.IfIsSingleton<
+    [L in AllLabels<Conts>]: util.IfIsSingleton<
       Parameters<Conts[L]>[0], // V1
       // (v: V1) => Merge<L1 | L2>
       (v: Parameters<Conts[L]>[0]) => Merge<ReturnType<Conts[L]>>,
       MergeError<"SelectBranch: values differ", Parameters<Conts[L]>[0]>
     >;
   },
-  MergeError<"SelectBranch: labels differ", util.AllKeys<Conts>>
+  MergeError<"SelectBranch: labels differ", AllLabels<Conts>>
 >;
+
+// see: https://github.com/millsp/ts-toolbelt/blob/v8.0.1/src/Union/Keys.ts
+// see: https://github.com/microsoft/TypeScript/issues/41349
+// { l1: ... } | { l1: ...; l2: ... } -> "l1" | "l2"
+type AllLabels<Conts> = Conts extends any ? keyof Conts : undefined;
 
 // Offer<"a", C1> | Offer<"a", C2> -> Offer<"a", ...>
 // Offer<"a", C1> | Offer<"b", C2> -> MergeError<...>
