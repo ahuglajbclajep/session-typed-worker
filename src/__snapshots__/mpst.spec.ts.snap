@@ -10,30 +10,30 @@ exports[`G1["B"] (type) should match snapshot 1`] = `"Offer<\\"A\\", [\\"a\\", [
 
 exports[`G1["C"] (type) should match snapshot 1`] = `"Offer<\\"B\\", [\\"a1\\", [string, Select<\\"A\\", { a2: (v: boolean) => Offer<\\"B\\", [\\"a1\\", [string, Select<\\"A\\", any>]] | [\\"b1\\", [{}, Close]]>; }>]] | [\\"b1\\", [{}, Close]]>"`;
 
-exports[`MPSTError < "Select: destination role conflict", "A" | "B" > (type) should match snapshot 1`] = `"MPSTError<\\"Select: destination role conflict\\", \\"A\\" | \\"B\\">"`;
+exports[`MPSTError < "Select: destination role conflict", "A" | "B" > (type) should match snapshot 1`] = `"MergeError<\\"Select: destination role conflict\\", \\"A\\" | \\"B\\">"`;
 
-exports[`MPSTError<"Merge: local type conflict", "offer" | "select"> (type) should match snapshot 1`] = `"MPSTError<\\"Merge: local type conflict\\", \\"select\\" | \\"offer\\">"`;
+exports[`MPSTError<"Merge: local type conflict", "offer" | "select"> (type) should match snapshot 1`] = `"MergeError<\\"Merge: local type conflict\\", \\"select\\" | \\"offer\\">"`;
 
-exports[`MPSTError<"Merge: local type conflict", "offer"> (type) should match snapshot 1`] = `"MPSTError<\\"Merge: local type conflict\\", \\"offer\\">"`;
+exports[`MPSTError<"Merge: local type conflict", "offer"> (type) should match snapshot 1`] = `"MergeError<\\"Merge: local type conflict\\", \\"offer\\">"`;
 
-exports[`MPSTError<"Merge: local type conflict", "select" | "offer"> (type) should match snapshot 1`] = `"MPSTError<\\"Merge: local type conflict\\", \\"select\\" | \\"offer\\">"`;
+exports[`MPSTError<"Merge: local type conflict", "select" | "offer"> (type) should match snapshot 1`] = `"MergeError<\\"Merge: local type conflict\\", \\"select\\" | \\"offer\\">"`;
 
-exports[`MPSTError<"Offer: destination role conflict", "A" | "B"> (type) should match snapshot 1`] = `"MPSTError<\\"Offer: destination role conflict\\", \\"A\\" | \\"B\\">"`;
+exports[`MPSTError<"Offer: destination role conflict", "A" | "B"> (type) should match snapshot 1`] = `"MergeError<\\"Offer: destination role conflict\\", \\"A\\" | \\"B\\">"`;
 
 exports[`Offer<"A", ["a", [string, Close]] | ["b", [string, Close]]> (type) should match snapshot 1`] = `"Offer<\\"A\\", [\\"a\\", [string, Close]] | [\\"b\\", [string, Close]]>"`;
 
 exports[`Offer<"A", ["a", [string, Close]]> (type) should match snapshot 1`] = `"Offer<\\"A\\", [\\"a\\", [string, Close]]>"`;
 
-exports[`Offer<"A", MPSTError<"OfferBranch: values differ", string | number>> (type) should match snapshot 1`] = `"Offer<\\"A\\", MPSTError<\\"OfferBranch: values differ\\", string | number>>"`;
+exports[`Offer<"A", MPSTError<"OfferBranch: values differ", string | number>> (type) should match snapshot 1`] = `"Offer<\\"A\\", MergeError<\\"OfferBranch: values differ\\", string | number>>"`;
 
 exports[`Offer<"B", ["a1", [string, Select<"A", { a2: (v: boolean) => Close }>]] | ["b1", [{}, Close]]> (type) should match snapshot 1`] = `"Offer<\\"B\\", [\\"a1\\", [string, Select<\\"A\\", { a2: (v: boolean) => Close; }>]] | [\\"b1\\", [{}, Close]]>"`;
 
-exports[`Offer<"B", MPSTError<"OfferBranch: values differ", string | {}>> (type) should match snapshot 1`] = `"Offer<\\"B\\", MPSTError<\\"OfferBranch: values differ\\", string | {}>>"`;
+exports[`Offer<"B", MPSTError<"OfferBranch: values differ", string | {}>> (type) should match snapshot 1`] = `"Offer<\\"B\\", MergeError<\\"OfferBranch: values differ\\", string | {}>>"`;
 
 exports[`Select<"A", { a: (v: string) => Close }> (type) should match snapshot 1`] = `"Select<\\"A\\", { a: (v: string) => Close; }>"`;
 
-exports[`Select<"A", { a: MPSTError<"SelectBranch: values differ", string | number> }> (type) should match snapshot 1`] = `"Select<\\"A\\", { a: MPSTError<\\"SelectBranch: values differ\\", string | number>; }>"`;
+exports[`Select<"A", { a: MPSTError<"SelectBranch: values differ", string | number> }> (type) should match snapshot 1`] = `"Select<\\"A\\", { a: MergeError<\\"SelectBranch: values differ\\", string | number>; }>"`;
 
-exports[`Select<"A", MPSTError<"SelectBranch: labels differ", "a" | "b">> (type) should match snapshot 1`] = `"Select<\\"A\\", MPSTError<\\"SelectBranch: labels differ\\", \\"a\\" | \\"b\\">>"`;
+exports[`Select<"A", MPSTError<"SelectBranch: labels differ", "a" | "b">> (type) should match snapshot 1`] = `"Select<\\"A\\", MergeError<\\"SelectBranch: labels differ\\", \\"a\\" | \\"b\\">>"`;
 
 exports[`Select<"B", { a: (v: {}) => Offer<"C", ["a2", [boolean, Close]]>; b: (v: {}) => Close }> (type) should match snapshot 1`] = `"Select<\\"B\\", { a: (v: {}) => Offer<\\"C\\", [\\"a2\\", [boolean, Close]]>; b: (v: {}) => Close; }>"`;

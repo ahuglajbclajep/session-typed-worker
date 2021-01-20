@@ -3,8 +3,8 @@ import type {
   Offer,
   Close,
   Local,
-  SelectLocals,
-  OfferLocals,
+  SelectConts,
+  OfferConts,
 } from "./mpst";
 
 type Message = [string, unknown];
@@ -58,7 +58,7 @@ async function init(selfOrWorkers: SelfOrWorkers): Promise<Local> {
   return context as any;
 }
 
-function send<R extends string, LS extends SelectLocals, L extends keyof LS>(
+function send<R extends string, LS extends SelectConts, L extends keyof LS>(
   port: Select<R, LS>,
   role: R,
   label: L,
@@ -68,11 +68,11 @@ function send<R extends string, LS extends SelectLocals, L extends keyof LS>(
   return port as any;
 }
 
-type OfferLocalsToObj<LS extends OfferLocals> = LS extends any
+type OfferLocalsToObj<LS extends OfferConts> = LS extends any
   ? { label: LS[0]; value: LS[1][0]; port: LS[1][1] }
   : never;
 
-async function recv<R extends string, LS extends OfferLocals>(
+async function recv<R extends string, LS extends OfferConts>(
   port: Offer<R, LS>,
   role: R
 ): Promise<OfferLocalsToObj<LS>> {
