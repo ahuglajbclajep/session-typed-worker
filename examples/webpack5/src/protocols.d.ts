@@ -1,19 +1,19 @@
-import { To, Finish } from "../../../";
+import { CommBase, EndBase } from "../../../";
 
 type Roles = "M" | "W";
-type Fin = Finish<Roles>;
-type CheckNumbersEquality = To<
+type End = EndBase<Roles>;
+type CheckNumbersEquality = CommBase<
   Roles,
   "M",
   "W",
   {
     _: [
       number,
-      To<
+      CommBase<
         Roles,
         "M",
         "W",
-        { _: [number, To<Roles, "W", "M", { _: [boolean, Fin] }>] }
+        { _: [number, CommBase<Roles, "W", "M", { _: [boolean, End] }>] }
       >
     ];
   }
