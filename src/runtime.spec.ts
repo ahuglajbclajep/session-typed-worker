@@ -1,7 +1,7 @@
-import { send, recv } from "./runtime";
+import { send, receive } from "./runtime";
 import type { Select, Offer, Close } from "./mpst";
 
-////////////////////////////// test cases of send //////////////////////////////
+///////////////////////////// test cases of send /////////////////////////////
 
 declare const s: Select<"A", { l: (k: number) => Close }>;
 
@@ -29,21 +29,21 @@ send<"A", { l: (k: number) => Close }, "l">(s, "A", "l", "42");
 // @dts-jest:fail:snap Type 'string' is not assignable to type 'number'.
 send<"A", { l: (k: string) => Close }, "l">(s, "A", "l", 42);
 
-////////////////////////////// test cases of recv //////////////////////////////
+//////////////////////////// test cases of receive ////////////////////////////
 
 declare const o: Offer<"B", ["l", [number, Close]]>;
 
 // @dts-jest:pass:snap Promise<{ label: "l"; value: number; port: Close }>
-recv<"B", ["l", [number, Close]]>(o, "B");
+receive<"B", ["l", [number, Close]]>(o, "B");
 
 // @dts-jest:fail:snap Argument of type '"A"' is not assignable to parameter of type '"B"'.
-recv<"B", ["l", [number, Close]]>(o, "A");
+receive<"B", ["l", [number, Close]]>(o, "A");
 
 // @dts-jest:fail:snap Type '"B"' is not assignable to type '"A"'.
-recv<"A", ["l", [number, Close]]>(o, "B");
+receive<"A", ["l", [number, Close]]>(o, "B");
 
 // @dts-jest:fail:snap Type '"l"' is not assignable to type '"r"'.
-recv<"B", ["r", [number, Close]]>(o, "B");
+receive<"B", ["r", [number, Close]]>(o, "B");
 
 // @dts-jest:fail:snap Type 'number' is not assignable to type 'string'.
-recv<"B", ["l", [string, Close]]>(o, "B");
+receive<"B", ["l", [string, Close]]>(o, "B");

@@ -10,42 +10,41 @@ import type {
 type Message = [string, unknown];
 type Ports = Record<string, MessagePort>;
 type Context = { ports: Ports; queues: Record<string, Message[]> };
+type Threads = Record<string, Window | Worker>;
 
-type Workers = Record<string, Window | Worker>;
-type SelfOrWorkers = DedicatedWorkerGlobalScope | Workers;
-
-async function init(selfOrWorkers: SelfOrWorkers): Promise<Local> {
+async function init(threads?: Threads): Promise<Local> {
   let ports: Ports;
-  if (selfOrWorkers === self) {
+  if (!threads) {
     if (self.document)
-      throw Error("The window is passed directly to the init function.");
+      throw Error("cannot call the init function with no arguments in window.");
     ports = await new Promise(
-      (resolve) => (selfOrWorkers.onmessage = (e) => resolve(e.data))
+      (resolve) =>
+        ((self as DedicatedWorkerGlobalScope).onmessage = (e) =>
+          resolve(e.data))
     );
   } else {
-    const workers = selfOrWorkers as Workers;
-    const selves = Object.entries(workers).filter(([, w]) => w === self);
+    const selves = Object.entries(threads).filter(([, t]) => t === self);
     if (selves.length !== 1)
-      throw Error("Only one self can be passed to the init function.");
+      throw Error("cannot pass more than one self to the init function.");
     const roleOfSelf = selves[0][0];
 
     let portMap: Record<string, Ports> = Object.fromEntries(
-      Object.keys(workers).map((r) => [r, {}])
+      Object.keys(threads).map((r) => [r, {}])
     );
-    for (const k of Object.keys(workers)) {
-      for (const l of Object.keys(workers)) {
-        if (k === l) continue;
-        if (!portMap[k][l]) {
+    for (const r of Object.keys(threads)) {
+      for (const s of Object.keys(threads)) {
+        if (r === s) continue;
+        if (!portMap[r][s]) {
           const { port1, port2 } = new MessageChannel();
-          portMap[k][l] = port1;
-          portMap[l][k] = port2;
+          portMap[r][s] = port1;
+          portMap[s][r] = port2;
         }
       }
     }
-    Object.entries(workers)
-      .filter(([, w]) => w !== self)
-      .forEach(([r, w]) =>
-        (w as Worker).postMessage(portMap[r], Object.values(portMap[r]))
+    Object.entries(threads)
+      .filter(([, t]) => t !== self)
+      .forEach(([r, t]) =>
+        (t as Worker).postMessage(portMap[r], Object.values(portMap[r]))
       );
     ports = portMap[roleOfSelf];
   }
@@ -58,24 +57,24 @@ async function init(selfOrWorkers: SelfOrWorkers): Promise<Local> {
   return context as any;
 }
 
-function send<R extends string, LS extends SelectConts, L extends keyof LS>(
-  port: Select<R, LS>,
-  role: R,
-  label: L,
-  value: Parameters<LS[L]>[0]
-): ReturnType<LS[L]> {
+function send<
+  Role extends string,
+  Conts extends SelectConts,
+  Label extends keyof Conts
+>(
+  port: Select<Role, Conts>,
+  role: Role,
+  label: Label,
+  value: Parameters<Conts[Label]>[0]
+): ReturnType<Conts[Label]> {
   ((port as any) as Context).ports[role].postMessage([label, value]);
   return port as any;
 }
 
-type OfferLocalsToObj<LS extends OfferConts> = LS extends any
-  ? { label: LS[0]; value: LS[1][0]; port: LS[1][1] }
-  : never;
-
-async function recv<R extends string, LS extends OfferConts>(
-  port: Offer<R, LS>,
-  role: R
-): Promise<OfferLocalsToObj<LS>> {
+async function receive<Role extends string, Conts extends OfferConts>(
+  port: Offer<Role, Conts>,
+  role: Role
+): Promise<ToObj<Conts>> {
   const { queues, ports } = (port as any) as Context;
   if (0 < queues[role].length) {
     const [label, value] = queues[role].shift()!;
@@ -93,6 +92,12 @@ async function recv<R extends string, LS extends OfferConts>(
   );
 }
 
+// ["l1", [V1, L1]] | ["l2", [V2, L2]] ->
+//   { label: "l1"; value: V1; port: L1 } | { label: "l2"; value: V2; port: L2 }
+type ToObj<T extends OfferConts> = T extends any
+  ? { label: T[0]; value: T[1][0]; port: T[1][1] }
+  : never;
+
 function close(port: Close) {}
 
-export { init, send, recv, close };
+export { init, send, receive, close };
