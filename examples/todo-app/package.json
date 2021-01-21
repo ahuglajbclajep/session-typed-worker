@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "webpack",
+    "prestart": "npm run build",
     "start": "micro"
   },
   "dependencies": {
