@@ -1,4 +1,4 @@
-import { CommBase, EndBase, Init } from "../../../";
+import { CommBase, EndBase } from "../../../";
 
 type Roles = "main" | "remote" | "local";
 type End = EndBase<Roles>;
@@ -23,4 +23,4 @@ type G = Comm<
   }
 >;
 
-export default G;
+export { Contents, G };
