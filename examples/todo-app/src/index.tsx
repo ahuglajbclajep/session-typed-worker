@@ -45,7 +45,7 @@ const App: FunctionComponent = () => {
   ));
   return (
     <>
-      <h1>todo</h1>
+      <h1>todos</h1>
       <AddTodo add={addTodo} />
       <ul>{items}</ul>
       <button onClick={push}>push</button>

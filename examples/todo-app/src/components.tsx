@@ -10,7 +10,7 @@ const AddTodo: FunctionComponent<{ add: (todo: string) => void }> = (props) => {
 
   return (
     <>
-      <input type="text" ref={ref} />
+      <input type="text" placeholder="What needs to be done?" ref={ref} />
       <button onClick={handleClick}>add</button>
     </>
   );
