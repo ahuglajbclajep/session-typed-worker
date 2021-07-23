@@ -28,7 +28,7 @@
     "@babel/preset-env": "^7.14.8",
     "@rollup/plugin-babel": "^5.3.0",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
-    "dts-jest": "^23.3.0",
+    "dts-jest": "^24.0.0",
     "jest": "^26.6.3",
     "rollup": "^2.53.3",
     "rollup-plugin-typescript2": "^0.30.0",
